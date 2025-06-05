@@ -1,0 +1,23 @@
+# example configuration file for windows_exporter
+
+collectors:
+  enabled: cpu,cpu_info,filetime,license,logical_disk,memory,net,os,physical_disk,service,system,terminal_services
+  service:
+    include: "windows_exporter" # Esto monitorea el estado del servicio de windows_exporter
+  performancecounter:
+    objects: |-
+      - name: photon_udp
+        object: "Photon Socket Server: UDP"
+        instances: ["*"]
+        counters:
+          - name: "UDP: Datagrams in"
+            metric: "photon_udp_datagrams"
+            labels:
+              direction: "in"
+          - name: "UDP: Datagrams out"
+            metric: "photon_udp_datagrams"
+            labels:
+              direction: "out"
+
+log:
+  level: warn # La sección 'log' debe estar al mismo nivel que 'collectors'
